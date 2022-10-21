@@ -1,3 +1,4 @@
+// 处理 get 请求 url 拼接
 import { isDate, isObject } from './util'
 
 function encode(val: string): string {
