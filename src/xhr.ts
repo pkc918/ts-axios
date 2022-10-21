@@ -2,13 +2,19 @@ import { parseHeaders } from './helpers/headers'
 import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from './types'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
-  return new Promise(resolve => {
-    const { data = null, url, method = 'get', headers, responseType } = config
+  return new Promise((resolve, reject) => {
+    const { data = null, url, method = 'get', headers, responseType, timeout } = config
     const request = new XMLHttpRequest()
 
     if (responseType) {
       request.responseType = responseType
     }
+
+    if (timeout) {
+      request.timeout = timeout
+    }
+
+    request.open(method.toUpperCase(), url, true)
 
     request.onreadystatechange = function handleLoad() {
       /*
@@ -19,6 +25,11 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         4: 下载操作已完成
       */
       if (request.readyState !== 4) {
+        return
+      }
+
+      // 网络错误，超时错误时候 status 为0
+      if (request.status === 0) {
         return
       }
       // 使用 getAllResponseHeaders 方法获取 headers
@@ -32,10 +43,18 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config,
         request
       }
-      resolve(response)
+      handleResponse(response)
     }
 
-    request.open(method.toUpperCase(), url, true)
+    // 网络错误
+    request.onerror = function handleError() {
+      reject(new Error('Network Error'))
+    }
+
+    // 超时错误
+    request.ontimeout = function handleTimeout() {
+      reject(new Error(`Timeout of ${timeout} ms exceeded`))
+    }
 
     Object.keys(headers).forEach(key => {
       // 当 data 为 null 时， content-type 无意义
@@ -46,5 +65,14 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       }
     })
     request.send(data)
+
+    function handleResponse(response: AxiosResponse): void {
+      // [200, 300) 代表成功
+      if (response.status >= 200 && response.status < 300) {
+        resolve(response)
+      } else {
+        reject(new Error(`Request failed with status code ${response.status}`))
+      }
+    }
   })
 }
