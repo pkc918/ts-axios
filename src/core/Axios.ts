@@ -4,7 +4,15 @@ import dispatchRequest from './dispatchRequest'
 // 设置请求类型，暴露出调用 api
 export default class Axios {
   // 原型下的方法
-  request(config: AxiosRequestConfig): AxiosPromise {
+  request(url: AxiosRequestConfig | string, config?: AxiosRequestConfig | null): AxiosPromise {
+    if (typeof url === 'string') {
+      if (!config) {
+        config = {}
+      }
+      config.url = url
+    } else {
+      config = url
+    }
     return dispatchRequest(config)
   }
 
