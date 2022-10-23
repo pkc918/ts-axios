@@ -47,7 +47,7 @@ export interface Axios {
   get(url: string, config?: AxiosRequestConfig): AxiosPromise
   delete(url: string, config?: AxiosRequestConfig): AxiosPromise
   head(url: string, config?: AxiosRequestConfig): AxiosPromise
-  option(url: string, config?: AxiosRequestConfig): AxiosPromise
+  options(url: string, config?: AxiosRequestConfig): AxiosPromise
   post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
   put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
   patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise

@@ -66,3 +66,11 @@ export function buildURL(url: string, params?: any): string {
   }
   return url
 }
+
+// 把 from 上的属性都扩展到 to 中，包括原型上的属性
+export function extend<T, U>(to: T, from: U): T & U {
+  for (const key in from) {
+    ;(to as T & U)[key] = from[key] as any
+  }
+  return to as T & U
+}
