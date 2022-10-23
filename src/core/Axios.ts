@@ -1,7 +1,9 @@
 import { AxiosPromise, AxiosRequestConfig, METHOD } from '../types'
 import dispatchRequest from './dispatchRequest'
 
+// 设置请求类型，暴露出调用 api
 export default class Axios {
+  // 原型下的方法
   request(config: AxiosRequestConfig): AxiosPromise {
     return dispatchRequest(config)
   }
