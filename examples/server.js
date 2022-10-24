@@ -122,4 +122,15 @@ function registerExtend() {
   router.patch('/extend/patch', function(req, res) {
     res.json(req.body)
   })
+
+  router.get('/extend/user', function(req, res) {
+    res.json({
+      code: 0,
+      message: `hello world`,
+      result: {
+        name: 'xxx',
+        age: 21
+      }
+    })
+  })
 }
