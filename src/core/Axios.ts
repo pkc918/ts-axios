@@ -29,7 +29,7 @@ export default class Axios {
   }
 
   // 原型下的方法
-  request(url: AxiosRequestConfig | string, config?: AxiosRequestConfig | null): AxiosPromise {
+  request(url: any, config?: any): AxiosPromise {
     if (typeof url === 'string') {
       if (!config) {
         config = {}

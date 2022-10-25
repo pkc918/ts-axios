@@ -70,7 +70,9 @@ export function buildURL(url: string, params?: any): string {
 // 把 from 上的属性都扩展到 to 中，包括原型上的属性
 export function extend<T, U>(to: T, from: U): T & U {
   for (const key in from) {
+    console.log(key, from, '为什么没有 interceptor')
     ;(to as T & U)[key] = from[key] as any
   }
+  console.dir(to, '属性呢')
   return to as T & U
 }
