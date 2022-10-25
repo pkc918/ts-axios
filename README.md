@@ -2,6 +2,8 @@
 
 使用 TypeScript 实现一个 axios 库
 
+<code><img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white"/></code>
+
 - ✅ 支持 多种（get，post，delete，head，options，put，patch）请求
 - ✅ 支持 `Request Headers` 配置
 - ✅ 支持 错误信息增强
