@@ -23,6 +23,7 @@ export default class Axios {
   interceptors: Interceptors
   constructor() {
     this.interceptors = {
+      // 两类拦截器实例
       request: new InterceptorManager<AxiosRequestConfig>(),
       response: new InterceptorManager<AxiosResponse>()
     }
