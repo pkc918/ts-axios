@@ -20,8 +20,11 @@ interface PromiseChain<T> {
 }
 // 设置请求类型，暴露出调用 api
 export default class Axios {
+  defaults: AxiosRequestConfig
   interceptors: Interceptors
-  constructor() {
+
+  constructor(initConfig: AxiosRequestConfig) {
+    this.defaults = initConfig
     this.interceptors = {
       // 两类拦截器实例
       request: new InterceptorManager<AxiosRequestConfig>(),
