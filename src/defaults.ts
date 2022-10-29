@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from './types'
 
+// 默认里的 headers 是复杂对象
 const defaults: AxiosRequestConfig = {
   method: 'get',
   timeout: 0,
