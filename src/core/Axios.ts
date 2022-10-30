@@ -43,12 +43,9 @@ export default class Axios {
     } else {
       config = url
     }
-    console.log(this.defaults, '默认config')
-    console.log(config, '传参的config')
 
     // 将默认配置和用户传递进来的配置进行何并
     config = mergeConfig(this.defaults, config)
-    console.log(config, '合并后config')
 
     // 存放所有定义的拦截器
     const chain: PromiseChain<any>[] = [
