@@ -1,6 +1,11 @@
 // 处理 get 请求 url 拼接
 import { isDate, isObject } from './util'
 
+interface URLOrigin{
+  protocol: string,
+  host: string
+}
+
 function encode(val: string): string {
   // 将特殊字符转义回原字符
   /*  encodeURIComponent
@@ -73,4 +78,28 @@ export function extend<T, U>(to: T, from: U): T & U {
     ;(to as T & U)[key] = from[key] as any
   }
   return to as T & U
+}
+
+// 同时满足条件，才是同源
+export function isURLSameOrigin(requestURL: string): boolean {
+  const parsedOrigin = resolveURL(requestURL)
+  const {protocol: parsedProtocol, host: parsedHost} = parsedOrigin
+  const {protocol: currentProtocol, host: currentHost} = currentOrigin
+  return (parsedProtocol === currentProtocol && parsedHost === currentHost);
+}
+
+const urlParsingNode = document.createElement('a')
+// 当前页面的 url
+const currentOrigin = resolveURL(window.location.href)
+
+function resolveURL(url: string): URLOrigin {
+  urlParsingNode.setAttribute('href', url)
+
+  // protocol 是协议，host 是端口
+  const { protocol, host } = urlParsingNode
+  return {
+    protocol,
+    host
+  }
+
 }
