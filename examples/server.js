@@ -34,6 +34,7 @@ registerErrorRouter()
 registerExtend()
 registerInterceptor()
 registerConfig()
+registerCancel()
 
 app.use(router)
 
@@ -145,6 +146,15 @@ function registerInterceptor() {
 
 function registerConfig() {
   router.post('/config/post', function(req, res) {
+    res.json(req.body)
+  })
+}
+
+function registerCancel() {
+  router.get('/cancel/get', function(req, res) {
+    res.json('hello')
+  })
+  router.post('/cancel/post', function(req, res) {
     res.json(req.body)
   })
 }
