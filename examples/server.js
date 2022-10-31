@@ -21,6 +21,13 @@ app.use(
   })
 )
 app.use(webpackHotMiddleware(compiler))
+// 每次请求都回通过这个中间件添加 cookie
+app.use(express.static(__dirname, {
+  setHeaders (res) {
+    res.cookie('XSRF-TOKEN-D', '1234abc')
+  }
+}))
+
 app.use(express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
