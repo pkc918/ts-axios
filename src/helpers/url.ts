@@ -1,8 +1,8 @@
 // 处理 get 请求 url 拼接
 import { isDate, isObject } from './util'
 
-interface URLOrigin{
-  protocol: string,
+interface URLOrigin {
+  protocol: string
   host: string
 }
 
@@ -83,9 +83,9 @@ export function extend<T, U>(to: T, from: U): T & U {
 // 同时满足条件，才是同源
 export function isURLSameOrigin(requestURL: string): boolean {
   const parsedOrigin = resolveURL(requestURL)
-  const {protocol: parsedProtocol, host: parsedHost} = parsedOrigin
-  const {protocol: currentProtocol, host: currentHost} = currentOrigin
-  return (parsedProtocol === currentProtocol && parsedHost === currentHost);
+  const { protocol: parsedProtocol, host: parsedHost } = parsedOrigin
+  const { protocol: currentProtocol, host: currentHost } = currentOrigin
+  return parsedProtocol === currentProtocol && parsedHost === currentHost
 }
 
 const urlParsingNode = document.createElement('a')
@@ -101,5 +101,8 @@ function resolveURL(url: string): URLOrigin {
     protocol,
     host
   }
+}
 
+export function isFormData(val: any): val is FormData {
+  return typeof val !== 'undefined' && val instanceof FormData
 }

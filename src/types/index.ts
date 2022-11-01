@@ -13,6 +13,7 @@ export type METHOD =
   | 'PUT'
   | 'patch'
   | 'PATCH'
+
 export interface AxiosRequestConfig {
   url?: string
   method?: METHOD
@@ -27,6 +28,8 @@ export interface AxiosRequestConfig {
   withCredentials?: boolean
   xsrfCookieName?: string
   xsrfHeaderName?: string
+  onDownloadProgress?: (e: ProgressEvent) => void
+  onUploadProgress?: (e: ProgressEvent) => void
 
   [propName: string]: any
 }
@@ -56,19 +59,28 @@ export interface Axios {
     request: AxiosInterceptorManager<AxiosRequestConfig>
     response: AxiosInterceptorManager<AxiosResponse>
   }
+
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
+
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+
   delete<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+
   head<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+
   options<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+
   post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
+
   put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
+
   patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
 export interface AxiosInstance extends Axios {
   // 本身是这样一个函数，继承其他属性
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
+
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
