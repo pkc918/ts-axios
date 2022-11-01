@@ -90,3 +90,15 @@ uploadEl!.addEventListener('click', () => {
     instance.post('/more/upload', data)
   }
 })
+
+axios.post('/more/post', {
+  a: 1
+}, {
+  auth: {
+    username: 'Yee',
+    password: '123456'
+  }
+}).then(res => {
+  console.log(res)
+})
+
