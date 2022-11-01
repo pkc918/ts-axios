@@ -3,16 +3,19 @@ import { AxiosRequestConfig } from '../types'
 
 // 存放当前需要的合并规则
 const starts = Object.create(null)
+
 // 共有的属性，第二个覆盖第一个
 function defaultStart(val1: any, val2: any): any {
   return typeof val2 !== 'undefined' ? val2 : val1
 }
+
 // 两个 config，第一个没定义的属性，第二个定义属性
 function fromVal2Start(val1: any, val2: any): any {
   if (typeof val2 !== 'undefined') {
     return val2
   }
 }
+
 // 合并 headers 对象
 function deepMergeStart(val1: any, val2: any): any {
   if (isPlainObject(val2)) {
@@ -25,7 +28,8 @@ function deepMergeStart(val1: any, val2: any): any {
     return val1
   }
 }
-const startKeysDeepMerge = ['headers']
+
+const startKeysDeepMerge = ['headers', 'auth']
 startKeysDeepMerge.forEach(key => {
   starts[key] = deepMergeStart
 })
