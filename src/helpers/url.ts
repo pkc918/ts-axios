@@ -1,5 +1,5 @@
 // 处理 get 请求 url 拼接
-import { isDate, isObject } from './util'
+import { isDate, isObject, isURLSearchParams } from './util'
 
 interface URLOrigin {
   protocol: string
@@ -30,38 +30,51 @@ function encode(val: string): string {
   )
 }
 
-export function buildURL(url: string, params?: any): string {
+export function buildURL(
+  url: string,
+  params?: any,
+  paramsSerializer?: (params: any) => string
+): string {
   if (!params) {
     return url
   }
-  const parts: string[] = []
-  // 判断每个key值得类型
-  Object.keys(params).forEach(key => {
-    let val = params[key]
-    if (val === null || typeof val === 'undefined') {
-      return
-    }
-    let targetArray = []
-    // 将每个值都封装成 数组 进行变化
-    if (Array.isArray(val)) {
-      targetArray = val
-      key += '[]'
-    } else {
-      targetArray = [val]
-    }
-    // 将 targetArray 里的值，都变为对应的字符串格式
-    targetArray.forEach(val => {
-      if (isDate(val)) {
-        // 转成 2022-10-21T03:33:10.062Z
-        val = val.toISOString()
-      } else if (isObject(val)) {
-        val = JSON.stringify(val)
+  let serializedParams
+  // 自定义的参数序列化规则
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params)
+  } else if (isURLSearchParams(params)) {
+    serializedParams = params.toString()
+  } else {
+    const parts: string[] = []
+    // 判断每个key值得类型
+    Object.keys(params).forEach(key => {
+      let val = params[key]
+      if (val === null || typeof val === 'undefined') {
+        return
       }
-      parts.push(`${encode(key)}=${encode(val)}`)
+      let targetArray = []
+      // 将每个值都封装成 数组 进行变化
+      if (Array.isArray(val)) {
+        targetArray = val
+        key += '[]'
+      } else {
+        targetArray = [val]
+      }
+      // 将 targetArray 里的值，都变为对应的字符串格式
+      targetArray.forEach(val => {
+        if (isDate(val)) {
+          // 转成 2022-10-21T03:33:10.062Z
+          val = val.toISOString()
+        } else if (isObject(val)) {
+          val = JSON.stringify(val)
+        }
+        parts.push(`${encode(key)}=${encode(val)}`)
+      })
     })
-  })
-  // serialize v. 连播，连载
-  let serializedParams = parts.join('&') // 1&2
+    // serialize v. 连播，连载
+    serializedParams = parts.join('&') // 1&2
+  }
+
   if (serializedParams) {
     const markIndex = url.indexOf('#')
     if (markIndex !== -1) {

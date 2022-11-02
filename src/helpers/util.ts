@@ -12,6 +12,10 @@ export function isPlainObject(val: any): val is Object {
   return toString.call(val) === '[object Object]'
 }
 
+export function isURLSearchParams(val: any): val is URLSearchParams {
+  return typeof val !== 'undefined' && val instanceof URLSearchParams
+}
+
 export function deepMerge(...objs: any[]): any {
   const result = Object.create(null)
 
