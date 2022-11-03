@@ -141,6 +141,8 @@ const instance = axios.create({
     return qs.stringify(params, { arrayFormat: 'brackets' })
   }
 })
+
+
 instance.get('/more/get', {
   params: {
     a: 1,
@@ -151,3 +153,9 @@ instance.get('/more/get', {
   console.log(res)
 })
 
+const instance1 = axios.create({
+  baseURL: 'https://p9-juejin.byteimg.com'
+})
+instance1.get('/tos-cn-i-k3u1fbpfcp/410367118c8a463dbe45fa1d30d7ad4a~tplv-k3u1fbpfcp-no-mark:240:240:240:160.awebp?')
+
+instance1.get('https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/410367118c8a463dbe45fa1d30d7ad4a~tplv-k3u1fbpfcp-no-mark:240:240:240:160.awebp?')
