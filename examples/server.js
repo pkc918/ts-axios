@@ -5,7 +5,7 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const WebpackConfig = require('./webpack.config')
-const path = require("path")
+const path = require('path')
 
 require('./server2')
 
@@ -24,7 +24,7 @@ app.use(
 app.use(webpackHotMiddleware(compiler))
 // 每次请求都回通过这个中间件添加 cookie
 app.use(express.static(__dirname, {
-  setHeaders (res) {
+  setHeaders(res) {
     res.cookie('XSRF-TOKEN-D', '1234abc')
   }
 }))
@@ -198,5 +198,13 @@ function registerMore() {
   router.get('/more/304', function(req, res) {
     res.status(304)
     res.end()
+  })
+
+  router.get('/more/A', function(req, res) {
+    res.end(`A`)
+  })
+
+  router.get('/more/B', function(req, res) {
+    res.end(`B`)
   })
 }

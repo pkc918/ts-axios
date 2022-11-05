@@ -120,42 +120,75 @@ import qs from 'qs'
 // })
 
 
-axios.get('/more/get', {
-  params: new URLSearchParams('a=b&c=d')
-}).then(res => {
-  console.log(res)
-})
+// axios.get('/more/get', {
+//   params: new URLSearchParams('a=b&c=d')
+// }).then(res => {
+//   console.log(res)
+// })
+//
+// axios.get('/more/get', {
+//   params: {
+//     a: 1,
+//     b: 2,
+//     c: ['a', 'b', 'c']
+//   }
+// }).then(res => {
+//   console.log(res)
+// })
+//
+// const instance = axios.create({
+//   paramsSerializer(params) {
+//     return qs.stringify(params, { arrayFormat: 'brackets' })
+//   }
+// })
+//
+//
+// instance.get('/more/get', {
+//   params: {
+//     a: 1,
+//     b: 2,
+//     c: ['a', 'b', 'c']
+//   }
+// }).then(res => {
+//   console.log(res)
+// })
+//
+// const instance1 = axios.create({
+//   baseURL: 'https://p9-juejin.byteimg.com'
+// })
+// instance1.get('/tos-cn-i-k3u1fbpfcp/410367118c8a463dbe45fa1d30d7ad4a~tplv-k3u1fbpfcp-no-mark:240:240:240:160.awebp?')
+//
+// instance1.get('https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/410367118c8a463dbe45fa1d30d7ad4a~tplv-k3u1fbpfcp-no-mark:240:240:240:160.awebp?')
 
-axios.get('/more/get', {
+
+function getA() {
+  return axios.get('/more/A')
+}
+
+function getB() {
+  return axios.get('/more/B')
+}
+
+axios.all([getA(), getB()])
+  .then(axios.spread(function(resA, resB) {
+    console.log(resA.data)
+    console.log(resB.data)
+  }))
+
+
+axios.all([getA(), getB()])
+  .then(([resA, resB]) => {
+    console.log(resA.data)
+    console.log(resB.data)
+  })
+
+const fakeConfig = {
+  baseURL: 'https://www.baidu.com/',
+  url: '/user/12345',
   params: {
-    a: 1,
-    b: 2,
-    c: ['a', 'b', 'c']
+    idClient: 1,
+    idTest: 2,
+    testString: 'thisIsATest'
   }
-}).then(res => {
-  console.log(res)
-})
-
-const instance = axios.create({
-  paramsSerializer(params) {
-    return qs.stringify(params, { arrayFormat: 'brackets' })
-  }
-})
-
-
-instance.get('/more/get', {
-  params: {
-    a: 1,
-    b: 2,
-    c: ['a', 'b', 'c']
-  }
-}).then(res => {
-  console.log(res)
-})
-
-const instance1 = axios.create({
-  baseURL: 'https://p9-juejin.byteimg.com'
-})
-instance1.get('/tos-cn-i-k3u1fbpfcp/410367118c8a463dbe45fa1d30d7ad4a~tplv-k3u1fbpfcp-no-mark:240:240:240:160.awebp?')
-
-instance1.get('https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/410367118c8a463dbe45fa1d30d7ad4a~tplv-k3u1fbpfcp-no-mark:240:240:240:160.awebp?')
+}
+console.log(axios.getUri(fakeConfig))
