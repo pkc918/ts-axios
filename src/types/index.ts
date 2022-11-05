@@ -68,7 +68,7 @@ export interface Axios {
 
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  delete<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
+  delete<T = any>(uaxiosrl: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
   head<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
@@ -79,6 +79,8 @@ export interface Axios {
   put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 
   patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
+
+  getUri(config?: AxiosRequestConfig): string
 }
 
 export interface AxiosInstance extends Axios {
@@ -94,6 +96,16 @@ export interface AxiosStatic extends AxiosInstance {
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
   isCancel: (value: any) => boolean
+
+  all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
+
+  spread<T, R>(callback: (...arg: T[]) => R): (arr: T[]) => R
+
+  Axios: AxiosClassStatic
+}
+
+export interface AxiosClassStatic {
+  new (config: AxiosRequestConfig): Axios
 }
 
 export interface AxiosInterceptorManager<T> {
