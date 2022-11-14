@@ -65,7 +65,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         }
         // 使用 getAllResponseHeaders 方法获取 headers
         const responseHeaders = parseHeaders(request.getAllResponseHeaders())
-        const responseData = responseType !== 'text' ? request.response : request.responseText
+        const responseData =
+          responseType && responseType !== 'text' ? request.response : request.responseText
         const response: AxiosResponse = {
           data: responseData,
           status: request.status,
